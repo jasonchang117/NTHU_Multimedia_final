@@ -74,51 +74,75 @@ function varargout = GUI_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
+
 % --- Executes on button press in ch_image.
 function ch_image_Callback(hObject, eventdata, handles)
 % hObject    handle to ch_image (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-[filename, user_canceled] = imgetfile;
-imshow(filename);
+clc
+
+global input_img;
+global cycle;
+cycle = 0;
+[input_img, user_canceled] = imgetfile;
+imshow(imread(input_img));
+% side_front_portrait(front_image, side_image);
+
+
 % --- Executes on button press in effect_1.
-function effect_1_Callback(hObject, eventdata, handles)
+function effect_1_Callback(hObject, eventdata, handles)     % Galaxy
 % hObject    handle to effect_1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+global input_img;
+global return_img;
+[return_img] = eff_galaxy(input_img);
 
 
 % --- Executes on button press in effect_2.
-function effect_2_Callback(hObject, eventdata, handles)
+function effect_2_Callback(hObject, eventdata, handles)     % Threshold 
 % hObject    handle to effect_2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+global input_img;
+global return_img;
+[return_img] = eff_landscape(input_img);
 
 % --- Executes on button press in effect_3.
-function effect_3_Callback(hObject, eventdata, handles)
+function effect_3_Callback(hObject, eventdata, handles)     % Ink Splash
 % hObject    handle to effect_3 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+global input_img;
+global return_img;
+[return_img] = eff_landscape(input_img);
 
 % --- Executes on button press in effect_4.
-function effect_4_Callback(hObject, eventdata, handles)
+function effect_4_Callback(hObject, eventdata, handles)     % Landscape
 % hObject    handle to effect_4 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+global input_img;
+global return_img;
+global cycle;
+[return_img] = eff_landscape(input_img, mod(cycle, 4)+1 );
+cycle = cycle + 1;
 
 % --- Executes on slider movement.
 function slider_Callback(hObject, eventdata, handles)
 % hObject    handle to slider (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+
+global input_image;
+global return_image;
+
 disp( get(hObject, 'Value')*360 );
-imshow(hsv2rgb(get(hObject, 'Value'), 1, 1))
+% imshow(hsv2rgb(get(hObject, 'Value'), 1, 1));
+
 
 
 % --- Executes during object creation, after setting all properties.
@@ -126,6 +150,8 @@ function slider_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to slider (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
+
+
 
 % Hint: slider controls usually have a light gray background.
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
