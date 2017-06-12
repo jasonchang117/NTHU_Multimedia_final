@@ -1,4 +1,4 @@
-function [ output ] = eff_landscape( filename, cycle )
+function [ output ] = eff_landscape( filename )
 
 %% Remove background
 bg_color = imread('effect4_bg_color.png');
@@ -15,7 +15,7 @@ x=imshow(img, 'border','tight','initialmagnification','fit');set(gcf,'Position',
 
 
 %% input background & combine
-backg = imread( strcat('bg_scene', num2str(cycle), '.png'));
+backg = imread('bg_scene14.png');
 backg= imresize(backg, [500 500]);
 hold on;
 z= imshow(bg_color,'border','tight','initialmagnification','fit');set(gcf,'Position',[0,0,500,500]);axis normal;
@@ -24,15 +24,15 @@ y= imshow(backg,'border','tight','initialmagnification','fit');set(gcf,'Position
 
 
 %% cut the outline & reduce the transparency
-set(y, 'AlphaData', alpha*0.3);
-set(x, 'AlphaData', alpha);
+set(y, 'AlphaData', alpha*0.6);
+set(x, 'AlphaData', alpha*0.9);
 
 %% Save image
 saveas(a,'result4.png');
 
 %imwrite(a, 'effect4.png');
 output = imread('result4', 'png');
-% figure(2);
+%figure(2);
 output=imresize(output,[500 500]);
-% imshow(output);
+%imshow(output);
 end

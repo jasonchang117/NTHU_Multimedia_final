@@ -126,7 +126,8 @@ function effect_4_Callback(hObject, eventdata, handles)     % Landscape
 global input_img;
 global return_img;
 global cycle;
-[return_img] = eff_landscape(input_img, mod(cycle, 4)+1 );
+[return_img] = eff_landscape(input_img, mod(cycle, 3)+1 );
+% imshow(return_img, 'parent', handles.axes2);
 cycle = cycle + 1;
 
 % --- Executes on slider movement.
@@ -137,10 +138,14 @@ function slider_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 
-global input_image;
-global return_image;
+global input_img;
+global return_img;
+bar_value = get(hObject, 'Value');
+hsv_image = rgb2hsv(return_img);
+hue = hsv_image(:, :, 1);
+hsv_image(:, :, 1) = mod(hue + bar_value*360, 360)/360;
 
-disp( get(hObject, 'Value')*360 );
+imshow(hsv2rgb(hsv_image), 'parent', handles.axes2);
 % imshow(hsv2rgb(get(hObject, 'Value'), 1, 1));
 
 
@@ -150,9 +155,6 @@ function slider_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to slider (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
-
-
-
 % Hint: slider controls usually have a light gray background.
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor',[.9 .9 .9]);
