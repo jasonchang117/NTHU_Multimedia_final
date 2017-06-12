@@ -8,9 +8,9 @@ nose_ratio = .15;
 bi_param2 = .4;
 blacken_param = 0;
 
-img = imresize(imread('photo.png'), 1);
+img = imresize(imread('photo.png'), [512 512]);
 [M, N, P] = size(img);
-backg = imresize(im2single(imread('bg_galaxy.png')), 1);
+backg = imresize(im2single(imread('bg_galaxy.png')), [512 512]);
 backg = backg(1:M, 1:N, :);
 
 fDetector = vision.CascadeObjectDetector();
