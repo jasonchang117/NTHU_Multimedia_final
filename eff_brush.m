@@ -1,12 +1,9 @@
 function [ brush_out ] = eff_brush(img_foreground, img_background, pattern_idx)
-
+%% read and resize the photoes
 maxSize = 512;
 
 photo = im2single(imread(img_foreground));
-%photo = imresize(photo, 0.6);
-
 photo_bg = im2single(imread(img_background));
-%photo_bg = imresize(photo_bg, 0.6);
 
 a = size(photo, 1); 
 b = size(photo, 2);
@@ -17,12 +14,11 @@ else
     max = b;
 end
 r = maxSize / max;
-r
-photo = imresize(photo, r);
-%figure(8); imshow(photo);
 
+photo = imresize(photo, r);
 photo_bg = imresize(photo_bg, r);
-%figure(5); imshow(photo_bg);
+
+%% read and resize the brush and pattern
 
 gradient_file = {'data_2/purple.png'};
 color_bg = im2single(imread(gradient_file{1}));
@@ -38,8 +34,7 @@ if size(photo_bg, 1)-size(color_bg, 1) > 0 && size(photo_bg, 2)-size(color_bg, 2
     pattern = padarray(pattern, [size(photo_bg, 1)-size(pattern, 1), size(photo_bg, 2)-size(pattern, 2)], 'symmetric');
 end
 
+%% apply effect
 brush_out = brush_effect( photo, photo_bg, color_bg, pattern );
 
 %figure(1);imshow(brush_out)
-
-%imshow(photo_ink)
