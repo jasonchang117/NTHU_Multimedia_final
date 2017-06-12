@@ -23,7 +23,7 @@ if pho_w-size(pattern,1) > 0 &&  pho_h--size(pattern,2) > 0
 end
 
 %% add pattern to the background
-photo_bg = rgb2gray(photo_bg);
+%photo_bg = rgb2gray(photo_bg);
 photo_bg_mix = addPattern(photo_bg, pattern);
 
 %% fetch color

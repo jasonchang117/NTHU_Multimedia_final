@@ -2,8 +2,10 @@ function [ brush_out ] = eff_brush(img_foreground, img_background, pattern_idx)
 %% read and resize the photoes
 maxSize = 512;
 
-photo = im2single(imread(img_foreground));
-photo_bg = im2single(imread(img_background));
+[img_foreground, color, alpha] = imread(img_foreground, 'png');
+[img_background, color, alpha] = imread(img_background, 'png');
+photo = im2single(img_foreground);
+photo_bg = im2single(img_background);
 
 a = size(photo, 1); 
 b = size(photo, 2);
