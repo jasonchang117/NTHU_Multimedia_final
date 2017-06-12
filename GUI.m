@@ -79,8 +79,10 @@ function ch_image_Callback(hObject, eventdata, handles)
 % hObject    handle to ch_image (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-[filename, user_canceled] = imgetfile;
-imshow(filename);
+[front_image, user_canceled] = imgetfile;
+[side_image, user_canceled] = imgetfile;
+side_front_portrait(front_image, side_image);
+
 % --- Executes on button press in effect_1.
 function effect_1_Callback(hObject, eventdata, handles)
 % hObject    handle to effect_1 (see GCBO)
@@ -118,7 +120,7 @@ function slider_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 disp( get(hObject, 'Value')*360 );
-imshow(hsv2rgb(get(hObject, 'Value'), 1, 1))
+imshow(hsv2rgb(get(hObject, 'Value'), 1, 1));
 
 
 % --- Executes during object creation, after setting all properties.
