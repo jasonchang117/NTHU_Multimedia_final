@@ -23,7 +23,7 @@ clc;
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 06-Jun-2017 13:05:27
+% Last Modified by GUIDE v2.5 13-Jun-2017 02:27:34
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -81,12 +81,15 @@ function ch_image_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 clc
+set(handles.output, 'HandleVisibility', 'off');
+close all;
 
 global input_img;
 global cycle;
 cycle = 0;
 [input_img, user_canceled] = imgetfile;
-imshow(imread(input_img));
+handles.f = figure;
+imshow(imresize(imread(input_img), [500 500]));
 % side_front_portrait(front_image, side_image);
 
 
@@ -97,7 +100,10 @@ function effect_1_Callback(hObject, eventdata, handles)     % Galaxy
 % handles    structure with handles and user data (see GUIDATA)
 global input_img;
 global return_img;
+set(handles.output, 'HandleVisibility', 'off');
+close all;
 [return_img] = eff_galaxy(input_img);
+imshow(return_img);
 
 
 % --- Executes on button press in effect_2.
@@ -107,7 +113,13 @@ function effect_2_Callback(hObject, eventdata, handles)     % Threshold
 % handles    structure with handles and user data (see GUIDATA)
 global input_img;
 global return_img;
-[return_img] = eff_landscape(input_img);
+global cycle;
+set(handles.output, 'HandleVisibility', 'off');
+close all;
+[back_img, user_canceled] = imgetfile;
+[return_img] = eff_brush(input_img, back_img, mod(cycle, 3)+1);
+cycle = cycle + 1;
+imshow(return_img);
 
 % --- Executes on button press in effect_3.
 function effect_3_Callback(hObject, eventdata, handles)     % Ink Splash
@@ -116,7 +128,11 @@ function effect_3_Callback(hObject, eventdata, handles)     % Ink Splash
 % handles    structure with handles and user data (see GUIDATA)
 global input_img;
 global return_img;
-[return_img] = eff_landscape(input_img);
+global cycle;
+set(handles.output, 'HandleVisibility', 'off');
+close all;
+[return_img] = eff_ink(input_img, mod(cycle, 3)+1);
+imshow(return_img);
 
 % --- Executes on button press in effect_4.
 function effect_4_Callback(hObject, eventdata, handles)     % Landscape
@@ -126,9 +142,11 @@ function effect_4_Callback(hObject, eventdata, handles)     % Landscape
 global input_img;
 global return_img;
 global cycle;
-[return_img] = eff_landscape(input_img, mod(cycle, 3)+1 );
-% imshow(return_img, 'parent', handles.axes2);
+set(handles.output, 'HandleVisibility', 'off');
+close all;
+[return_img] = eff_landscape(input_img, mod(cycle, 16) );
 cycle = cycle + 1;
+imshow(return_img);
 
 % --- Executes on slider movement.
 function slider_Callback(hObject, eventdata, handles)
@@ -145,9 +163,8 @@ hsv_image = rgb2hsv(return_img);
 hue = hsv_image(:, :, 1);
 hsv_image(:, :, 1) = mod(hue + bar_value*360, 360)/360;
 
-imshow(hsv2rgb(hsv_image), 'parent', handles.axes2);
-% imshow(hsv2rgb(get(hObject, 'Value'), 1, 1));
-
+% imshow(hsv2rgb(hsv_image), 'parent', handles.axes2);
+imshow(hsv2rgb(hsv_image));hold on;
 
 
 % --- Executes during object creation, after setting all properties.

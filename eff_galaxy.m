@@ -3,7 +3,7 @@ function [ mask ] = eff_galaxy( filename )
 %filename='photo.png';
 
 %% input bg & photo
-bg_galaxy = imread('bg_galaxy.png');
+bg_galaxy = imread('data_1/bg_galaxy.png');
 bg_galaxy = imresize(bg_galaxy, [512 512]);
 bg_galaxy = im2double(bg_galaxy);
 [img, map, alpha]= imread(filename);
