@@ -132,6 +132,7 @@ global cycle;
 set(handles.output, 'HandleVisibility', 'off');
 close all;
 [return_img] = eff_ink(input_img, mod(cycle, 3)+1);
+cycle = cycle + 1;
 imshow(return_img);
 
 % --- Executes on button press in effect_4.
