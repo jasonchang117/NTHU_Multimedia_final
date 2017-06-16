@@ -17,7 +17,7 @@ photo = imsharpen(photo);
 photo = rgb2gray(photo);
 
 %% do binarization
-photo_ink = binarize(photo, threshold, 0, 255);
+photo_ink = binarize(photo, 0, 255);
 
 %% filter 
 for i = 1 : pho_w

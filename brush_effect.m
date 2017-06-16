@@ -14,7 +14,7 @@ if trans_h+pho_h-1 >= bg_h, trans_h = bg_h-pho_h+1; end
 photo = imguidedfilter(photo);
 photo = imsharpen(photo);
 photo = rgb2gray(photo);
-photo_ink = binarize(photo, 0.6, 0, 1);
+photo_ink = binarize(photo, 0, 1);
 
 %% change the pattern to gray scale image, and do padding
 pattern = rgb2gray(pattern);

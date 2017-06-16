@@ -19,7 +19,7 @@ end
 move = [0 0; 20 150; 10 40; -40 40];
 
 %% apply effect
-splash_out = splash_effect(photo, splash, 150, move(idx,:));
+splash_out = splash_effect(photo, splash, move(idx,:));
 
 %figure(1);imshow(splash_out)
 end

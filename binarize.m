@@ -1,20 +1,22 @@
-function [ photo_ink ] = binarize( photo_gray, threshold, dark, light )
+function [ photo_ink ] = binarize( photo_gray, dark, light )
 
-[pho_w, pho_h] = size(photo_gray);
-A = photo_gray(:);
-black = find(A < threshold);
-white = find(A >= threshold);
-A(black) = dark;
-A(white) = light;
-photo_ink = reshape(A, pho_w, pho_h);
+%A = photo_gray(:);
+%black = find(A < threshold);
+%white = find(A >= threshold);
+%A(black) = dark;
+%A(white) = light;
+%photo_ink = reshape(A, pho_w, pho_h);
 %figure(3);imshow(gray)
 
-[idx, C]= kmeans(photo_gray(:), 2, 'MaxIter', 100);
-black = find(abs(A - C(1)) <= abs(A - C(2)));
-white = find(abs(A - C(1)) > abs(A - C(2)));
+[pho_w, pho_h] = size(photo_gray);
+[idx, C]= kmeans(photo_gray(:), 2, 'MaxIter', 10);
+A = photo_gray(:);
+if C(1) > C(2), tmp = C(2); C(2) = C(1); C(1) = tmp; end
+black = find(abs(A - C(1)) <= abs(A - C(2) - 0.3));
+white = find(abs(A - C(1)) > abs(A - C(2) - 0.3));
 A(black) = dark;
 A(white) = light;
 photo_ink = reshape(A, pho_w, pho_h);
-%idx, black
+%C
 end
 
