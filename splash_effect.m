@@ -1,4 +1,4 @@
-function [ out ] = splash_effect( photo, splash, threshold, move )
+function [ out ] = splash_effect( photo, splash, move )
 %% initialize
 [spl_w, spl_h] = size(splash);
 [pho_w, pho_h, ~] = size(photo);
@@ -17,7 +17,8 @@ photo = imsharpen(photo);
 photo = rgb2gray(photo);
 
 %% do binarization
-photo_ink = binarize(photo, 0, 255);
+photo_ink = binarize_splash(photo);
+%figure(10);imshow(photo_ink)
 
 %% filter 
 for i = 1 : pho_w
@@ -32,3 +33,14 @@ end
 out = splash;
 end
 
+function [ photo_ink ] = binarize_splash( photo )
+
+threshold = 120;
+[pho_w, pho_h] = size(photo);
+A = photo(:);
+black = find(A < threshold);
+white = find(A >= threshold);
+A(black) = 0;
+A(white) = 255;
+photo_ink = reshape(A, pho_w, pho_h);
+end
